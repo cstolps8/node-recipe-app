@@ -15,9 +15,24 @@ Some ideas of what to add:
 
 ## Requirements
 
-**Right click the following Codespaces button to open your Codespace in a new tab:**
+### Using GitHub Codespaces (recommended)
+
+This repository is configured for GitHub Codespaces. When you open a Codespace, it will automatically install dependencies and start the app on port 3000.
+
+**Option 1 – Use the badge below (right-click to open in a new tab):**
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1026168589)
+
+**Option 2 – Create a Codespace from the GitHub UI:**
+
+1. Navigate to the repository on GitHub.
+2. Click the green **Code** button near the top-right of the page.
+3. Select the **Codespaces** tab.
+4. Click **Create codespace on main** (or choose a branch).
+5. Wait for the Codespace to finish building — dependencies are installed automatically.
+6. Once the Codespace is ready, the app starts on port 3000 and a preview opens automatically.
+
+### Running locally
 
 You can also run locally with the help of Dev Containers. If you want to run outside of a container, the setup should be the following commands in your terminal:
 
