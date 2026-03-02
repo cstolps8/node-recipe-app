@@ -17,6 +17,9 @@ router.get('/recipes/:id', async (req, res) => {
 	const db = await getDbConnection()
 	const recipeId = req.params.id
 	const recipe = await db.get('SELECT * FROM recipes WHERE id = ?', [recipeId])
+	if (!recipe) {
+		return res.status(404).render('recipe', { recipe: null })
+	}
 	res.render('recipe', { recipe })
 })
 
@@ -38,6 +41,24 @@ router.post('/recipes/:id/edit', async (req, res) => {
 		recipeId,
 	])
 	res.redirect(`/recipes/${recipeId}`)
+})
+
+router.delete('/recipes/:id', async (req, res) => {
+	const db = await getDbConnection()
+	const recipeId = req.params.id
+	const recipe = await db.get('SELECT * FROM recipes WHERE id = ?', [recipeId])
+	if (!recipe) {
+		return res.status(404).json({ error: 'Recipe not found' })
+	}
+	await db.run('DELETE FROM recipes WHERE id = ?', [recipeId])
+	res.redirect('/recipes')
+})
+
+router.post('/recipes/:id/delete', async (req, res) => {
+	const db = await getDbConnection()
+	const recipeId = req.params.id
+	await db.run('DELETE FROM recipes WHERE id = ?', [recipeId])
+	res.redirect('/recipes')
 })
 
 module.exports = router
