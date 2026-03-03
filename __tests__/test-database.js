@@ -1,14 +1,24 @@
 const sqlite3 = require('sqlite3')
 const { open } = require('sqlite')
 
+let currentDb = null
+
 async function getTestDbConnection() {
-	return open({
-		filename: './test-database.sqlite',
-		driver: sqlite3.Database,
-	})
+	if (!currentDb) {
+		currentDb = await open({
+			filename: ':memory:',
+			driver: sqlite3.Database,
+		})
+	}
+	return currentDb
 }
 
 async function initializeTestDb() {
+	// Close any existing connection so each test gets a fresh in-memory database
+	if (currentDb) {
+		try { await currentDb.close() } catch (_) { /* already closed by test */ }
+		currentDb = null
+	}
 	const db = await getTestDbConnection()
 	await createTables(db)
 	return db
